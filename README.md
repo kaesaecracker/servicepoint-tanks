@@ -56,4 +56,30 @@
     - 11: (reserved)
 - client responds with empty message to request the next frame
 
+# Building
 
+```bash
+# checkout repo and submodules
+git clone https://github.com/kaesaecracker/servicepoint-tanks.git
+cd servicepoint-tanks
+git submodule update --init
+cd tanks-backend/servicepoint
+git submodule update --init
+cd ../..
+
+# build with nix-shell
+nix-shell
+cd tank-frontent
+npm install
+npm run build
+cd ../tanks-backend
+dotnet build
+
+# build with docker/podman
+cd tanks-backend
+docker build .
+cd ../tank-frontend
+docker build .
+cd ..
+docker build .
+```

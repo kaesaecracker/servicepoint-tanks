@@ -1,8 +1,16 @@
-{pkgs ? import <nixpkgs> {}}:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 let
-rust-toolchain = pkgs.symlinkJoin {
+  rust-toolchain = pkgs.symlinkJoin {
     name = "rust-toolchain";
-    paths = with pkgs; [rustc cargo rustPlatform.rustcSrc rustfmt clippy];
+    paths = with pkgs; [
+      rustc
+      cargo
+      rustPlatform.rustcSrc
+      rustfmt
+      clippy
+    ];
   };
 in
 pkgs.mkShell {
@@ -15,6 +23,9 @@ pkgs.mkShell {
     cargo-tarpaulin
     gnumake
     iconv
+
+    typescript
+    nodejs
 
     dotnet-sdk_8
   ];
