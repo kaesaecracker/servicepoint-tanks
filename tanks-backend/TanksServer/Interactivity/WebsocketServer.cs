@@ -1,23 +1,23 @@
 using System.Diagnostics;
-using Microsoft.Extensions.Hosting;
 
 namespace TanksServer.Interactivity;
 
 internal abstract class WebsocketServer<T>(
     ILogger logger
-) : IHostedLifecycleService
+) : LoggingLifecycleService(logger)
     where T : WebsocketServerConnection
 {
     private bool _closing;
     private readonly ConcurrentDictionary<T, byte> _connections = [];
 
-    public async Task StoppingAsync(CancellationToken cancellationToken)
+    public async override Task StoppingAsync(CancellationToken cancellationToken)
     {
+        await base.StoppingAsync(cancellationToken);
         _closing = true;
-        logger.LogInformation("closing connections");
+        Logger.LogInformation("closing connections");
         await _connections.Keys.Select(c => c.CloseAsync())
             .WhenAll();
-        logger.LogInformation("closed connections");
+        Logger.LogInformation("closed connections");
     }
 
     protected IEnumerable<T> Connections => _connections.Keys;
@@ -26,7 +26,7 @@ internal abstract class WebsocketServer<T>(
     {
         if (_closing)
         {
-            logger.LogWarning("refusing connection because server is shutting down");
+            Logger.LogWarning("refusing connection because server is shutting down");
             await connection.CloseAsync();
             return;
         }
@@ -39,14 +39,4 @@ internal abstract class WebsocketServer<T>(
         _ = _connections.TryRemove(connection, out _);
         connection.Dispose();
     }
-
-    public Task StartAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-    public Task StartedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-    public Task StartingAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-    public Task StoppedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

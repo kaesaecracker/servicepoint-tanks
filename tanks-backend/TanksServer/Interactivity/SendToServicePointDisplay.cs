@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using ServicePoint;
 using TanksServer.GameLogic;
 using TanksServer.Graphics;
 
@@ -42,13 +41,13 @@ internal sealed class SendToServicePointDisplay : IFrameConsumer, IDisposable
 
         var localIp = GetLocalIPv4(displayConfig.Value).Split('.');
         Debug.Assert(localIp.Length == 4);
-        _scoresBuffer = new CharGrid(12, 20);
+        _scoresBuffer = new CharGrid(ScoresWidth, ScoresHeight);
 
         _scoresBuffer.SetRow(00, "== TANKS! ==");
         _scoresBuffer.SetRow(01, "-- scores --");
         _scoresBuffer.SetRow(17, "--  join  --");
-        _scoresBuffer.SetRow(18, string.Join('.', localIp[..2]));
-        _scoresBuffer.SetRow(19, string.Join('.', localIp[2..]));
+        _scoresBuffer.SetRow(18, $"{localIp[0]}.{localIp[1]}".PadRight(ScoresWidth));
+        _scoresBuffer.SetRow(19, $"{localIp[2]}.{localIp[3]}".PadRight(ScoresWidth));
     }
 
     public async Task OnFrameDoneAsync(GamePixelGrid gamePixelGrid, Bitmap observerPixels)
@@ -101,7 +100,7 @@ internal sealed class SendToServicePointDisplay : IFrameConsumer, IDisposable
         for (; row < 16; row++)
             _scoresBuffer.SetRow(row, new string(' ', ScoresWidth));
 
-        _scoresBuffer.SetRow(16, _mapService.Current.Name[..(Math.Min(ScoresWidth, _mapService.Current.Name.Length) - 1)]);
+        _scoresBuffer.SetRow(16, _mapService.Current.Name[..(Math.Min(ScoresWidth, _mapService.Current.Name.Length) - 1)].PadRight(ScoresWidth));
     }
 
     private static string GetLocalIPv4(DisplayConfiguration configuration)

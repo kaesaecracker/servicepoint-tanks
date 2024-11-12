@@ -1,5 +1,3 @@
-using ServicePoint;
-
 namespace TanksServer.Graphics;
 
 internal interface IFrameConsumer

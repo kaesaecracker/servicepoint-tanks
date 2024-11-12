@@ -7,13 +7,11 @@ internal sealed class GameTickWorker(
     IEnumerable<ITickStep> steps,
     IHostApplicationLifetime lifetime,
     ILogger<GameTickWorker> logger
-) : IHostedLifecycleService, IDisposable
+) : BackgroundService, IDisposable
 {
-    private readonly CancellationTokenSource _cancellation = new();
-    private readonly TaskCompletionSource _shutdownCompletion = new();
     private readonly List<ITickStep> _steps = steps.ToList();
 
-    public async Task StartedAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         await Task.Yield();
 
@@ -23,7 +21,7 @@ internal sealed class GameTickWorker(
 
         try
         {
-            while (!_cancellation.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 var delta = sw.Elapsed;
                 sw.Restart();
@@ -37,19 +35,5 @@ internal sealed class GameTickWorker(
             logger.LogError(ex, "game tick service crashed");
             lifetime.StopApplication();
         }
-
-        _shutdownCompletion.SetResult();
     }
-
-    public Task StoppingAsync(CancellationToken cancellationToken) => _cancellation.CancelAsync();
-
-    public Task StopAsync(CancellationToken cancellationToken) => _shutdownCompletion.Task;
-
-    public void Dispose() => _cancellation.Dispose();
-
-    public Task StartAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-    public Task StartingAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-    public Task StoppedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

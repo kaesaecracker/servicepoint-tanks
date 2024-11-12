@@ -67,8 +67,8 @@ public static class Program
         builder.Services.AddSingleton<UpdatesPerSecondCounter>();
 
         builder.Services.AddHostedService<GameTickWorker>();
-        builder.Services.AddHostedService(sp => sp.GetRequiredService<ControlsServer>());
-        builder.Services.AddHostedService(sp => sp.GetRequiredService<ClientScreenServer>());
+        builder.Services.AddHostedService(FromServices<ControlsServer>);
+        builder.Services.AddHostedService(FromServices<ClientScreenServer>);
 
         builder.Services.AddSingleton<ITickStep, ChangeToRequestedMap>(sp =>
             sp.GetRequiredService<ChangeToRequestedMap>());
@@ -113,4 +113,6 @@ public static class Program
 
         return app;
     }
+
+    private static T FromServices<T>(IServiceProvider sp) where T : notnull => sp.GetRequiredService<T>();
 }
