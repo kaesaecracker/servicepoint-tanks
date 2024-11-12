@@ -11,7 +11,7 @@ internal sealed class SpriteMapPrototype : MapPrototype
 
     public SpriteMapPrototype(string name, Sprite sprite)
     {
-        if (sprite.Width != MapService.PixelsPerRow || sprite.Height != MapService.PixelsPerColumn)
+        if ((ulong)sprite.Width != MapService.PixelsPerRow || (ulong)sprite.Height != MapService.PixelsPerColumn)
             throw new FileLoadException($"invalid image size in file {Name}");
 
         Name = name;

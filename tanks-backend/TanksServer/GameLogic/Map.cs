@@ -4,7 +4,7 @@ internal sealed class Map(string name, bool[,] walls)
 {
     public string Name => name;
 
-    public bool IsWall(int x, int y) => walls[x, y];
+    public bool IsWall(ulong x, ulong y) => walls[x, y];
 
     public bool IsWall(PixelPosition position) => walls[position.X, position.Y];
 
@@ -12,12 +12,12 @@ internal sealed class Map(string name, bool[,] walls)
     {
         var pixel = position.ToPixelPosition();
 
-        for (short dx = 0; dx < MapService.TileSize; dx++)
-        for (short dy = 0; dy < MapService.TileSize; dy++)
-        {
-            if (IsWall(pixel.GetPixelRelative(dx, dy)))
-                return true;
-        }
+        for (long dx = 0; dx < (long)MapService.TileSize; dx++)
+            for (long dy = 0; dy < (long)MapService.TileSize; dy++)
+            {
+                if (IsWall(pixel.GetPixelRelative(dx, dy)))
+                    return true;
+            }
 
         return false;
     }

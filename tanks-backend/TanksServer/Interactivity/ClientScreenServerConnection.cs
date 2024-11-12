@@ -36,7 +36,7 @@ internal sealed class ClientScreenServerConnection
 
     private Package BuildNextPackage(Bitmap pixels, GamePixelGrid gamePixelGrid)
     {
-        var pixelsData = pixels.Data;
+        var pixelsData = pixels.CopyRaw();
         var nextPixels = _bufferPool.Rent(pixelsData.Length);
         pixelsData.CopyTo(nextPixels.Memory.Span);
 

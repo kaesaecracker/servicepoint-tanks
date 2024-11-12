@@ -68,13 +68,13 @@ internal sealed class MoveTanks(
     {
         var (topLeft, _) = newPosition.GetBoundsForCenter(MapService.TileSize);
 
-        for (short y = 0; y < MapService.TileSize; y++)
-        for (short x = 0; x < MapService.TileSize; x++)
-        {
-            var pixelToCheck = topLeft.GetPixelRelative(x, y);
-            if (map.Current.IsWall(pixelToCheck))
-                return true;
-        }
+        for (ulong y = 0; y < MapService.TileSize; y++)
+            for (ulong x = 0; x < MapService.TileSize; x++)
+            {
+                var pixelToCheck = topLeft.GetPixelRelative((long)x, (long)y);
+                if (map.Current.IsWall(pixelToCheck))
+                    return true;
+            }
 
         return false;
     }

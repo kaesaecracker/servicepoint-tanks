@@ -3,7 +3,7 @@ namespace TanksServer.Interactivity;
 internal abstract class WebsocketServerConnection(
     ILogger logger,
     ByteChannelWebSocket socket
-): IDisposable
+) : IDisposable
 {
     protected readonly ByteChannelWebSocket Socket = socket;
     protected readonly ILogger Logger = logger;

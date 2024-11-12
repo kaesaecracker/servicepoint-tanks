@@ -5,27 +5,27 @@ namespace TanksServer.Graphics;
 
 internal sealed class GamePixelGrid : IEnumerable<GamePixel>
 {
-    public int Width { get; }
-    public int Height { get; }
+    public ulong Width { get; }
+    public ulong Height { get; }
 
     private readonly GamePixel[,] _pixels;
 
-    public GamePixelGrid(int width, int height)
+    public GamePixelGrid(ulong width, ulong height)
     {
         Width = width;
         Height = height;
 
         _pixels = new GamePixel[width, height];
-        for (var y = 0; y < height; y++)
-        for (var x = 0; x < width; x++)
-            this[x, y] = new GamePixel();
+        for (ulong y = 0; y < height; y++)
+            for (ulong x = 0; x < width; x++)
+                this[x, y] = new GamePixel();
     }
 
-    public GamePixel this[int x, int y]
+    public GamePixel this[ulong x, ulong y]
     {
         get
         {
-            Debug.Assert(y * Width + x < _pixels.Length);
+            Debug.Assert(y * Width + x < (ulong)_pixels.Length);
             return _pixels[x, y];
         }
         set => _pixels[x, y] = value;
@@ -41,8 +41,8 @@ internal sealed class GamePixelGrid : IEnumerable<GamePixel>
 
     public IEnumerator<GamePixel> GetEnumerator()
     {
-        for (var y = 0; y < Height; y++)
-        for (var x = 0; x < Width; x++)
-            yield return this[x, y];
+        for (ulong y = 0; y < Height; y++)
+            for (ulong x = 0; x < Width; x++)
+                yield return this[x, y];
     }
 }

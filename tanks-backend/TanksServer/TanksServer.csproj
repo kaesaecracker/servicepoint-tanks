@@ -29,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\servicepoint\crates\servicepoint_binding_cs\ServicePoint\ServicePoint.csproj" />
+      <ProjectReference Include="..\servicepoint\crates\servicepoint_binding_uniffi\libraries\csharp\ServicePoint\ServicePoint.csproj" />
     </ItemGroup>
 
 </Project>

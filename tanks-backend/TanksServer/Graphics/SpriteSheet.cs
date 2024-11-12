@@ -21,23 +21,23 @@ internal sealed class SpriteSheet(Sprite[,] sprites)
 
         var whitePixel = new Rgba32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
         for (var spriteY = 0; spriteY < spritesPerColumn; spriteY++)
-        for (var spriteX = 0; spriteX < spritesPerRow; spriteX++)
-        {
-            var data = new bool?[spriteWidth, spriteHeight];
-            for (var dy = 0; dy < spriteHeight; dy++)
-            for (var dx = 0; dx < spriteWidth; dx++)
+            for (var spriteX = 0; spriteX < spritesPerRow; spriteX++)
             {
-                var x = spriteX * spriteWidth + dx;
-                var y = spriteY * spriteHeight + dy;
+                var data = new bool?[spriteWidth, spriteHeight];
+                for (var dy = 0; dy < spriteHeight; dy++)
+                    for (var dx = 0; dx < spriteWidth; dx++)
+                    {
+                        var x = spriteX * spriteWidth + dx;
+                        var y = spriteY * spriteHeight + dy;
 
-                var pixelValue = image[x, y];
-                data[dx, dy] = pixelValue.A == 0
-                    ? null
-                    : pixelValue == whitePixel;
+                        var pixelValue = image[x, y];
+                        data[dx, dy] = pixelValue.A == 0
+                            ? null
+                            : pixelValue == whitePixel;
+                    }
+
+                sprites[spriteX, spriteY] = new Sprite(data);
             }
-
-            sprites[spriteX, spriteY] = new Sprite(data);
-        }
 
         return new SpriteSheet(sprites);
     }

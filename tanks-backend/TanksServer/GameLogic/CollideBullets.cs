@@ -88,13 +88,13 @@ internal sealed class CollideBullets : ITickStep
 
         pixel = pixel.GetPixelRelative(-4, -4);
         for (short dx = 0; dx < _explosiveSprite.Width; dx++)
-        for (short dy = 0; dy < _explosiveSprite.Height; dy++)
-        {
-            if (!_explosiveSprite[dx, dy].HasValue)
-                continue;
+            for (short dy = 0; dy < _explosiveSprite.Height; dy++)
+            {
+                if (!_explosiveSprite[dx, dy].HasValue)
+                    continue;
 
-            Core(pixel.GetPixelRelative(dx, dy));
-        }
+                Core(pixel.GetPixelRelative(dx, dy));
+            }
 
         return;
 

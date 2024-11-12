@@ -1,8 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using ServicePoint;
 using TanksServer.GameLogic;
 using TanksServer.Graphics;
 using TanksServer.Interactivity;
@@ -11,6 +11,8 @@ namespace TanksServer;
 
 public static class Program
 {
+    [RequiresUnreferencedCode("Calls Endpoints.Map")]
+    [RequiresDynamicCode("Calls Endpoints.Map")]
     public static async Task Main(string[] args)
     {
         var app = Configure(args);
@@ -25,6 +27,8 @@ public static class Program
         await app.RunAsync();
     }
 
+    [RequiresUnreferencedCode("Calls Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions.Configure<TOptions>(IConfiguration)")]
+    [RequiresDynamicCode("Calls Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions.Configure<TOptions>(IConfiguration)")]
     private static WebApplication Configure(string[] args)
     {
         var builder = WebApplication.CreateSlimBuilder(args);
@@ -43,10 +47,7 @@ public static class Program
                 .AllowAnyOrigin())
         );
 
-        builder.Services.ConfigureHttpJsonOptions(options =>
-        {
-            options.SerializerOptions.TypeInfoResolverChain.Insert(0, new AppSerializerContext());
-        });
+        builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.TypeInfoResolverChain.Insert(0, new AppSerializerContext()));
 
         builder.Services.AddHttpLogging(_ => { });
 
@@ -100,10 +101,7 @@ public static class Program
         builder.Services.AddSingleton<Connection>(sp =>
         {
             var config = sp.GetRequiredService<IOptions<DisplayConfiguration>>().Value;
-            var connection = Connection.Open($"{config.Hostname}:{config.Port}");
-            if (connection == null)
-                throw new IOException($"Could not open connection to {config.Hostname}:{config.Port}");
-
+            var connection = new Connection($"{config.Hostname}:{config.Port}");
             return connection;
         });
 

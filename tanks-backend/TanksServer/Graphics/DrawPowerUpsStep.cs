@@ -30,16 +30,16 @@ internal sealed class DrawPowerUpsStep(MapEntityManager entityManager) : IDrawSt
     private static void DrawPowerUp(GamePixelGrid pixels, Sprite sprite, PixelPosition position)
     {
         for (byte dy = 0; dy < MapService.TileSize; dy++)
-        for (byte dx = 0; dx < MapService.TileSize; dx++)
-        {
-            var pixelState = sprite[dx, dy];
-            if (!pixelState.HasValue)
-                continue;
+            for (byte dx = 0; dx < MapService.TileSize; dx++)
+            {
+                var pixelState = sprite[dx, dy];
+                if (!pixelState.HasValue)
+                    continue;
 
-            var (x, y) = position.GetPixelRelative(dx, dy);
-            pixels[x, y].EntityType = pixelState.Value
-                ? GamePixelEntityType.PowerUp
-                : null;
-        }
+                var (x, y) = position.GetPixelRelative(dx, dy);
+                pixels[x, y].EntityType = pixelState.Value
+                    ? GamePixelEntityType.PowerUp
+                    : null;
+            }
     }
 }
