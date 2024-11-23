@@ -11,7 +11,7 @@ internal enum PowerUpType
     SmartBullets,
 }
 
-internal sealed class PowerUp: IMapEntity
+internal sealed class PowerUp : IMapEntity
 {
     public required FloatPosition Position { get; init; }
 

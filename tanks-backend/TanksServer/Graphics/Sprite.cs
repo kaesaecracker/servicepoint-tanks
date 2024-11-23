@@ -12,13 +12,13 @@ internal sealed class Sprite(bool?[,] data)
 
         var whitePixel = new Rgba32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
         for (var y = 0; y < image.Height; y++)
-        for (var x = 0; x < image.Width; x++)
-        {
-            var pixelValue = image[x, y];
-            data[x, y] = pixelValue.A == 0
-                ? null
-                : pixelValue == whitePixel;
-        }
+            for (var x = 0; x < image.Width; x++)
+            {
+                var pixelValue = image[x, y];
+                data[x, y] = pixelValue.A == 0
+                    ? null
+                    : pixelValue == whitePixel;
+            }
 
         return new Sprite(data);
     }
@@ -34,8 +34,8 @@ internal sealed class Sprite(bool?[,] data)
         var result = new bool[Width, Height];
 
         for (var y = 0; y < Height; y++)
-        for (var x = 0; x < Width; x++)
-            result[x, y] = this[x, y] ?? false;
+            for (var x = 0; x < Width; x++)
+                result[x, y] = this[x, y] ?? false;
 
         return result;
     }

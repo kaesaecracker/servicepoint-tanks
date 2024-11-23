@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using ServicePoint;
 using TanksServer.GameLogic;
 using TanksServer.Interactivity;
 
@@ -22,6 +22,8 @@ internal sealed class Endpoints(
     Connection displayConnection
 )
 {
+    [RequiresUnreferencedCode("Calls Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapPost(String, Delegate)")]
+    [RequiresDynamicCode("Calls Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapPost(String, Delegate)")]
     public void Map(WebApplication app)
     {
         app.MapPost("/player", PostPlayer);
@@ -31,7 +33,7 @@ internal sealed class Endpoints(
         app.Map("/controls", ConnectControlsAsync);
         app.MapGet("/map", () => mapService.MapNames);
         app.MapPost("/map", PostMap);
-        app.MapPost("/resetDisplay", () => displayConnection.Send(Command.HardReset().IntoPacket()));
+        app.MapPost("/resetDisplay", () => displayConnection.Send(Command.HardReset()));
         app.MapGet("/map/{name}", GetMapByName);
 
         app.MapHealthChecks("/health", new HealthCheckOptions
@@ -117,7 +119,7 @@ internal sealed class Endpoints(
         if (!mapService.TryGetPreview(name, out var preview))
             return TypedResults.NotFound();
 
-        var mapInfo = new MapInfo(prototype.Name, prototype.GetType().Name, preview.Data.ToArray());
+        var mapInfo = new MapInfo(prototype.Name, prototype.GetType().Name, preview.CopyRaw());
         return TypedResults.Ok(mapInfo);
     }
 

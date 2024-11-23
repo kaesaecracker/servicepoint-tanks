@@ -1,4 +1,3 @@
-using ServicePoint;
 using TanksServer.GameLogic;
 using TanksServer.Interactivity;
 
@@ -20,7 +19,7 @@ internal sealed class GeneratePixelsTickStep(
     public async ValueTask TickAsync(TimeSpan _)
     {
         Draw(_gamePixelGrid, _observerPixelGrid);
-        if (_observerPixelGrid.Data.SequenceEqual(_lastObserverPixelGrid.Data))
+        if (_observerPixelGrid.Equals(_lastObserverPixelGrid))
             return;
 
         await _consumers.Select(c => c.OnFrameDoneAsync(_gamePixelGrid, _observerPixelGrid))
@@ -37,12 +36,12 @@ internal sealed class GeneratePixelsTickStep(
             step.Draw(gamePixelGrid);
 
         observerPixelGrid.Fill(false);
-        for (var y = 0; y < MapService.PixelsPerColumn; y++)
-        for (var x = 0; x < MapService.PixelsPerRow; x++)
-        {
-            if (gamePixelGrid[x, y].EntityType.HasValue)
-                observerPixelGrid[(ushort)x, (ushort)y] = true;
-        }
+        for (ulong y = 0; y < MapService.PixelsPerColumn; y++)
+            for (ulong x = 0; x < MapService.PixelsPerRow; x++)
+            {
+                if (gamePixelGrid[x, y].EntityType.HasValue)
+                    observerPixelGrid.Set(x, y, true);
+            }
     }
 
     public void Dispose()

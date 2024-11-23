@@ -1,18 +1,17 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using ServicePoint;
 using TanksServer.Graphics;
 
 namespace TanksServer.GameLogic;
 
 internal sealed class MapService
 {
-    public const ushort TilesPerRow = 44;
-    public const ushort TilesPerColumn = 20;
-    public const ushort TileSize = 8;
-    public const ushort PixelsPerRow = TilesPerRow * TileSize;
-    public const ushort PixelsPerColumn = TilesPerColumn * TileSize;
+    public static readonly ulong TilesPerRow = 44;
+    public static readonly ulong TilesPerColumn = ServicePointConstants.TileHeight;
+    public static readonly ulong TileSize = ServicePointConstants.TileSize;
+    public static readonly ulong PixelsPerRow = TilesPerRow * TileSize;
+    public static readonly ulong PixelsPerColumn = TilesPerColumn * TileSize;
 
     private readonly ConcurrentDictionary<string, MapPrototype> _mapPrototypes = new();
     private readonly ConcurrentDictionary<string, Bitmap> _mapPreviews = new();

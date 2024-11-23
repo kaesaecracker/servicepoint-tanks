@@ -4,8 +4,8 @@ using TanksServer.GameLogic;
 namespace TanksServer.Models;
 
 [DebuggerDisplay("({X} | {Y})")]
-internal readonly struct TilePosition(ushort x, ushort y)
+internal readonly struct TilePosition(ulong x, ulong y)
 {
-    public ushort X { get; } = (ushort)((x + MapService.TilesPerRow) % MapService.TilesPerRow);
-    public ushort Y { get; } = (ushort)((y + MapService.TilesPerColumn) % MapService.TilesPerColumn);
+    public ulong X { get; } = (ulong)((x + MapService.TilesPerRow) % MapService.TilesPerRow);
+    public ulong Y { get; } = (ulong)((y + MapService.TilesPerColumn) % MapService.TilesPerColumn);
 }

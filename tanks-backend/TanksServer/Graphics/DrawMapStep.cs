@@ -1,4 +1,3 @@
-using ServicePoint;
 using TanksServer.GameLogic;
 
 namespace TanksServer.Graphics;
@@ -9,24 +8,24 @@ internal sealed class DrawMapStep(MapService map) : IDrawStep
 
     private static void Draw(GamePixelGrid pixels, Map map)
     {
-        for (ushort y = 0; y < MapService.PixelsPerColumn; y++)
-        for (ushort x = 0; x < MapService.PixelsPerRow; x++)
-        {
-            if (!map.IsWall(x, y))
-                continue;
+        for (ulong y = 0; y < MapService.PixelsPerColumn; y++)
+            for (ulong x = 0; x < MapService.PixelsPerRow; x++)
+            {
+                if (!map.IsWall(x, y))
+                    continue;
 
-            pixels[x, y].EntityType = GamePixelEntityType.Wall;
-        }
+                pixels[x, y].EntityType = GamePixelEntityType.Wall;
+            }
     }
 
     public static void Draw(Bitmap pixels, Map map)
     {
-        for (ushort y = 0; y < MapService.PixelsPerColumn; y++)
-        for (ushort x = 0; x < MapService.PixelsPerRow; x++)
-        {
-            if (!map.IsWall(x, y))
-                continue;
-            pixels[x, y] = true;
-        }
+        for (ulong y = 0; y < MapService.PixelsPerColumn; y++)
+            for (ulong x = 0; x < MapService.PixelsPerRow; x++)
+            {
+                if (!map.IsWall(x, y))
+                    continue;
+                pixels.Set(x, y, true);
+            }
     }
 }

@@ -37,7 +37,7 @@ internal sealed class MapEntityManager(
         {
             Rotation = Random.Shared.NextDouble(),
             MaxBullets = _rules.MagazineSize,
-            BulletStats =new BulletStats(_rules.BulletSpeed, 0, false, false)
+            BulletStats = new BulletStats(_rules.BulletSpeed, 0, false, false)
         };
         _playerTanks[player] = tank;
         logger.LogInformation("Tank added for player {}", player.Name);

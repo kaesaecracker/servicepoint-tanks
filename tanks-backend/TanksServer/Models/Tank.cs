@@ -10,7 +10,8 @@ internal sealed class Tank(Player owner, FloatPosition position) : IMapEntity
 
     [JsonIgnore] public Player Owner { get; } = owner;
 
-    [JsonIgnore] public double Rotation
+    [JsonIgnore]
+    public double Rotation
     {
         get => _rotation;
         set
