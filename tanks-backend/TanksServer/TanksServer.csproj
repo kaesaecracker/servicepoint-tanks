@@ -16,6 +16,7 @@
         <AnalysisMode>Recommended</AnalysisMode>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <NoWarn>CA1805,CA1848</NoWarn>
+        <WarningsNotAsErrors>NU1903,NU1902</WarningsNotAsErrors>
     </PropertyGroup>
 
     <ItemGroup>

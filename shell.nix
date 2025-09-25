@@ -20,7 +20,7 @@ pkgs.mkShell {
 
     pkg-config
     xe
-    lzma
+    xz
     cargo-tarpaulin
     gnumake
     iconv
