@@ -1,5 +1,5 @@
 {
-  description = "Dev shell flake for servicepoint-tanks";
+  description = "flake for servicepoint-tanks";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
@@ -13,13 +13,13 @@
         "aarch64-linux"
       ];
       forAllSystems =
-        f:
+        fn:
         nixpkgs.lib.genAttrs supported-systems (
           system:
-          f rec {
-            pkgs = nixpkgs.legacyPackages.${system};
-            lib = nixpkgs.lib;
+          fn {
             inherit system;
+            inherit (nixpkgs) lib;
+            pkgs = nixpkgs.legacyPackages.${system};
             selfPkgs = self.packages.${system};
           }
         );
@@ -35,6 +35,10 @@
         let
           frontend-set = {
             inputsFrom = [ selfPkgs.servicepoint-tanks-frontend ];
+            packages = with pkgs; [
+              typescript
+              nodejs
+            ];
           };
           backend-set = {
             inputsFrom = [ selfPkgs.servicepoint-tanks-backend ];
@@ -52,7 +56,12 @@
       );
 
       packages = forAllSystems (
-        { pkgs, lib, ... }:
+        {
+          pkgs,
+          lib,
+          selfPkgs,
+          ...
+        }:
         {
           servicepoint-tanks-frontend = pkgs.buildNpmPackage (finalAttrs: {
             pname = "tank-frontend";
@@ -66,6 +75,36 @@
             '';
           });
 
+          servicepoint-binding-csharp = pkgs.buildDotnetModule {
+            pname = "servicepoint-binding-csharp";
+            version = "0.0.0";
+
+            src = ./tanks-backend/servicepoint-binding-csharp;
+            projectFile = "ServicePoint/ServicePoint.csproj";
+            nugetDeps = ./tanks-backend/deps.json;
+
+            packNupkg = true;
+
+            nativeBuildInputs = with pkgs; [
+              pkg-config
+              xe
+              xz
+              gnumake
+              iconv
+
+              (pkgs.symlinkJoin {
+                name = "rust-toolchain";
+                paths = with pkgs; [
+                  rustc
+                  cargo
+                  rustPlatform.rustcSrc
+                  rustfmt
+                  clippy
+                ];
+              })
+            ];
+          };
+
           servicepoint-tanks-backend = pkgs.buildDotnetModule {
             pname = "servicepoint-tanks-backend";
             version = "0.0.0";
@@ -74,14 +113,15 @@
             dotnet-runtime = pkgs.dotnetCorePackages.runtime_8_0;
 
             src = ./tanks-backend;
-            projectFile = "TanksServer.sln";
+            projectFile =   "TanksServer/TanksServer.csproj";
             nugetDeps = ./tanks-backend/deps.json;
+
             selfContainedBuild = true;
 
+            buildInputs = [ selfPkgs.servicepoint-binding-csharp ];
+
             nativeBuildInputs = with pkgs; [
-              pkg-config
-              xe
-              xz
+              # todo needed?
               gnumake
               iconv
             ];

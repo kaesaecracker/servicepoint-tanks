@@ -30,7 +30,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\servicepoint\crates\servicepoint_binding_uniffi\libraries\csharp\ServicePoint\ServicePoint.csproj" />
+      <ProjectReference Include="..\servicepoint-binding-uniffi\SericePoint\ServicePoint.csproj" />
+      <PackageReference Include="ServicePoint" Version="*" Condition=" '$(ContinuousIntegrationBuild)'=='true' "/>
     </ItemGroup>
 
 </Project>
