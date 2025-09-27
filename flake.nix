@@ -32,13 +32,22 @@
           selfPkgs,
           ...
         }:
-        {
-          frontend = pkgs.mkShell {
+        let
+          frontend-set = {
             inputsFrom = [ selfPkgs.servicepoint-tanks-frontend ];
           };
-          default = import ./shell.nix {
-            inherit pkgs lib;
+          backend-set = {
+            inputsFrom = [ selfPkgs.servicepoint-tanks-backend ];
+            packages = with pkgs; [
+              nuget-to-json
+              cargo-tarpaulin
+            ];
           };
+        in
+        {
+          frontend = pkgs.mkShell frontend-set;
+          backend = pkgs.mkShell backend-set;
+          default = pkgs.mkShell (frontend-set // backend-set);
         }
       );
 
@@ -50,13 +59,33 @@
             version = "0.0.0";
 
             src = ./tank-frontend;
-
             npmDepsHash = "sha256-HvwoSeKHBDkM/5OHDkgSOxfHx1gbnKif/3QfDb6r5mE=";
 
             installPhase = ''
               cp -rv dist/ $out
             '';
           });
+
+          servicepoint-tanks-backend = pkgs.buildDotnetModule {
+            pname = "servicepoint-tanks-backend";
+            version = "0.0.0";
+
+            dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
+            dotnet-runtime = pkgs.dotnetCorePackages.runtime_8_0;
+
+            src = ./tanks-backend;
+            projectFile = "TanksServer.sln";
+            nugetDeps = ./tanks-backend/deps.json;
+            selfContainedBuild = true;
+
+            nativeBuildInputs = with pkgs; [
+              pkg-config
+              xe
+              xz
+              gnumake
+              iconv
+            ];
+          };
         }
       );
 

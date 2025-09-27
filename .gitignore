@@ -4,4 +4,4 @@ obj
 client
 *.sarif
 .direnv
-
+out

@@ -10,19 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{12DB7D
 		..\.envrc = ..\.envrc
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "servicepoint", "servicepoint", "{A10FB29A-9078-4E90-9CE1-E6C2B5209E19}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "servicepoint-binding-csharp", "servicepoint-binding-csharp", "{919DCD05-B92D-48A6-BB1F-8ABD460BD788}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "crates", "crates", "{656A7CBA-9445-41CC-B1AF-A6897AAC9F17}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicePoint", "servicepoint-binding-csharp\ServicePoint\ServicePoint.csproj", "{3C856AD4-DBC6-419D-8373-9D99A2E2AA04}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "servicepoint_binding_uniffi", "servicepoint_binding_uniffi", "{5FD9FAD7-07BA-4DF9-8C84-15A9558373F1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libraries", "libraries", "{6082A0DC-5345-48C8-BA2E-667754A2F0E9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "csharp", "csharp", "{D8A3290B-5DFB-43C6-99EE-56AB5F53F468}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicePoint", "servicepoint\crates\servicepoint_binding_uniffi\libraries\csharp\ServicePoint\ServicePoint.csproj", "{D1DDCD0D-6152-45E6-B673-DD78C466BDC3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicePoint.Tests", "servicepoint\crates\servicepoint_binding_uniffi\libraries\csharp\ServicePoint.Tests\ServicePoint.Tests.csproj", "{EF42D6B7-70B1-490B-BB5F-5A44D1309A7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicePoint.Tests", "servicepoint-binding-csharp\ServicePoint.Tests\ServicePoint.Tests.csproj", "{D0B09E1D-B20F-4883-8D32-5E5420224CC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,21 +26,17 @@ Global
 		{D88BF376-47A4-4C72-ADD1-983F9285C351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D88BF376-47A4-4C72-ADD1-983F9285C351}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D88BF376-47A4-4C72-ADD1-983F9285C351}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1DDCD0D-6152-45E6-B673-DD78C466BDC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1DDCD0D-6152-45E6-B673-DD78C466BDC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1DDCD0D-6152-45E6-B673-DD78C466BDC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1DDCD0D-6152-45E6-B673-DD78C466BDC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF42D6B7-70B1-490B-BB5F-5A44D1309A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF42D6B7-70B1-490B-BB5F-5A44D1309A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF42D6B7-70B1-490B-BB5F-5A44D1309A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF42D6B7-70B1-490B-BB5F-5A44D1309A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C856AD4-DBC6-419D-8373-9D99A2E2AA04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C856AD4-DBC6-419D-8373-9D99A2E2AA04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C856AD4-DBC6-419D-8373-9D99A2E2AA04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C856AD4-DBC6-419D-8373-9D99A2E2AA04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0B09E1D-B20F-4883-8D32-5E5420224CC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0B09E1D-B20F-4883-8D32-5E5420224CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0B09E1D-B20F-4883-8D32-5E5420224CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0B09E1D-B20F-4883-8D32-5E5420224CC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{656A7CBA-9445-41CC-B1AF-A6897AAC9F17} = {A10FB29A-9078-4E90-9CE1-E6C2B5209E19}
-		{5FD9FAD7-07BA-4DF9-8C84-15A9558373F1} = {656A7CBA-9445-41CC-B1AF-A6897AAC9F17}
-		{6082A0DC-5345-48C8-BA2E-667754A2F0E9} = {5FD9FAD7-07BA-4DF9-8C84-15A9558373F1}
-		{D8A3290B-5DFB-43C6-99EE-56AB5F53F468} = {6082A0DC-5345-48C8-BA2E-667754A2F0E9}
-		{D1DDCD0D-6152-45E6-B673-DD78C466BDC3} = {D8A3290B-5DFB-43C6-99EE-56AB5F53F468}
-		{EF42D6B7-70B1-490B-BB5F-5A44D1309A7C} = {D8A3290B-5DFB-43C6-99EE-56AB5F53F468}
+		{3C856AD4-DBC6-419D-8373-9D99A2E2AA04} = {919DCD05-B92D-48A6-BB1F-8ABD460BD788}
+		{D0B09E1D-B20F-4883-8D32-5E5420224CC3} = {919DCD05-B92D-48A6-BB1F-8ABD460BD788}
 	EndGlobalSection
 EndGlobal
