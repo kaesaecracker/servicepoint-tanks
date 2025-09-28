@@ -3,10 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
+
+    binding = {
+        url = "git+https://git.berlin.ccc.de/servicepoint/servicepoint-binding-csharp.git";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { self, nixpkgs }:
+    { self, nixpkgs, binding }:
     let
       supported-systems = [
         "x86_64-linux"
@@ -21,6 +26,7 @@
             inherit (nixpkgs) lib;
             pkgs = nixpkgs.legacyPackages.${system};
             selfPkgs = self.packages.${system};
+            bindingPkgs = binding.packages.${system};
           }
         );
     in
@@ -60,6 +66,7 @@
           pkgs,
           lib,
           selfPkgs,
+          bindingPkgs,
           ...
         }:
         {
@@ -75,36 +82,6 @@
             '';
           });
 
-          servicepoint-binding-csharp = pkgs.buildDotnetModule {
-            pname = "servicepoint-binding-csharp";
-            version = "0.0.0";
-
-            src = ./tanks-backend/servicepoint-binding-csharp;
-            projectFile = "ServicePoint/ServicePoint.csproj";
-            nugetDeps = ./tanks-backend/deps.json;
-
-            packNupkg = true;
-
-            nativeBuildInputs = with pkgs; [
-              pkg-config
-              xe
-              xz
-              gnumake
-              iconv
-
-              (pkgs.symlinkJoin {
-                name = "rust-toolchain";
-                paths = with pkgs; [
-                  rustc
-                  cargo
-                  rustPlatform.rustcSrc
-                  rustfmt
-                  clippy
-                ];
-              })
-            ];
-          };
-
           servicepoint-tanks-backend = pkgs.buildDotnetModule {
             pname = "servicepoint-tanks-backend";
             version = "0.0.0";
@@ -118,13 +95,7 @@
 
             selfContainedBuild = true;
 
-            buildInputs = [ selfPkgs.servicepoint-binding-csharp ];
-
-            nativeBuildInputs = with pkgs; [
-              # todo needed?
-              gnumake
-              iconv
-            ];
+            buildInputs = [ bindingPkgs.servicepoint-binding-csharp ];
           };
         }
       );

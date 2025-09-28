@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PublishAot>true</PublishAot>
+        <!--<PublishAot>true</PublishAot>-->
         <IsAotCompatible>true</IsAotCompatible>
         <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
@@ -30,8 +30,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\servicepoint-binding-uniffi\SericePoint\ServicePoint.csproj" />
-      <PackageReference Include="ServicePoint" Version="*" Condition=" '$(ContinuousIntegrationBuild)'=='true' "/>
+      <ProjectReference Include="..\servicepoint-binding-uniffi\SericePoint\ServicePoint.csproj" Condition="'$(ContinuousIntegrationBuild)'!='true'" />
+      <PackageReference Include="ServicePoint" Version="*" Condition="'$(ContinuousIntegrationBuild)'=='true'"/>
     </ItemGroup>
 
 </Project>
