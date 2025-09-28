@@ -6,5 +6,5 @@ set -euxo pipefail
 # nuget-to-json out > deps.json
 
 # update
-nix build ".?submodules=1#servicepoint-tanks-backend.fetch-deps"
+nix build .#servicepoint-tanks-backend.fetch-deps
 ./result deps.json
