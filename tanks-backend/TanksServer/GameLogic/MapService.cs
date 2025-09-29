@@ -22,9 +22,10 @@ internal sealed class MapService
 
     public MapService()
     {
-        foreach (var file in Directory.EnumerateFiles("./assets/maps/", "*.txt"))
+        var dir = Path.Combine(Program.AssetsDir, "maps");
+        foreach (var file in Directory.EnumerateFiles(dir, "*.txt"))
             LoadMapString(file);
-        foreach (var file in Directory.EnumerateFiles("./assets/maps/", "*.png"))
+        foreach (var file in Directory.EnumerateFiles(dir, "*.png"))
             LoadMapPng(file);
         Current = GetRandomMap();
     }

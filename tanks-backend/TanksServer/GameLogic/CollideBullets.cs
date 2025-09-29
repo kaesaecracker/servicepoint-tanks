@@ -4,7 +4,7 @@ namespace TanksServer.GameLogic;
 
 internal sealed class CollideBullets : ITickStep
 {
-    private readonly Sprite _explosiveSprite = Sprite.FromImageFile("assets/explosion.png");
+    private readonly Sprite _explosiveSprite = Sprite.FromImageFile(Path.Combine(Program.AssetsDir, "explosion.png"));
     private readonly Predicate<Bullet> _removeBulletsPredicate;
     private readonly MapEntityManager _entityManager;
     private readonly MapService _map;

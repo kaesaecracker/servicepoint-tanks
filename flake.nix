@@ -5,13 +5,17 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
 
     binding = {
-        url = "git+https://git.berlin.ccc.de/servicepoint/servicepoint-binding-csharp.git";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "git+https://git.berlin.ccc.de/servicepoint/servicepoint-binding-csharp.git";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    { self, nixpkgs, binding }:
+    {
+      self,
+      nixpkgs,
+      binding,
+    }:
     let
       supported-systems = [
         "x86_64-linux"
@@ -47,7 +51,7 @@
             ];
           };
           backend-set = {
-            inputsFrom = [ selfPkgs.servicepoint-tanks-backend ];
+            inputsFrom = [ selfPkgs.servicepoint-tanks ];
             packages = with pkgs; [
               nuget-to-json
               cargo-tarpaulin
@@ -71,7 +75,7 @@
         }:
         {
           servicepoint-tanks-frontend = pkgs.buildNpmPackage (finalAttrs: {
-            pname = "tank-frontend";
+            pname = "servicepoint-tanks-frontend";
             version = "0.0.0";
 
             src = ./tank-frontend;
@@ -82,20 +86,27 @@
             '';
           });
 
-          servicepoint-tanks-backend = pkgs.buildDotnetModule {
-            pname = "servicepoint-tanks-backend";
+          servicepoint-tanks-assets = ./tanks-backend/TanksServer/assets;
+
+          servicepoint-tanks = pkgs.buildDotnetModule {
+            pname = "servicepoint-tanks";
             version = "0.0.0";
 
             dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
             dotnet-runtime = pkgs.dotnetCorePackages.runtime_8_0;
 
             src = ./tanks-backend;
-            projectFile =   "TanksServer/TanksServer.csproj";
+            projectFile = "TanksServer/TanksServer.csproj";
             nugetDeps = ./tanks-backend/deps.json;
 
             selfContainedBuild = true;
 
             buildInputs = [ bindingPkgs.servicepoint-binding-csharp ];
+
+            makeWrapperArgs = [
+              "--set-default TANKSSERVER_CLIENT ${selfPkgs.servicepoint-tanks-frontend}"
+              "--set-default TANKSSERVER_ASSETS ${selfPkgs.servicepoint-tanks-assets}"
+            ];
           };
         }
       );

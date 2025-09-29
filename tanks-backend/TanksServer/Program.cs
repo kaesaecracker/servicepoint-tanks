@@ -11,20 +11,42 @@ namespace TanksServer;
 
 public static class Program
 {
+    internal static string AssetsDir = (Environment.GetEnvironmentVariable("TANKSSERVER_ASSETS") ?? "./assets") + "/";
+
     [RequiresUnreferencedCode("Calls Endpoints.Map")]
     [RequiresDynamicCode("Calls Endpoints.Map")]
     public static async Task Main(string[] args)
     {
         var app = Configure(args);
 
-        var clientFileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "client"));
+        app.Logger.LogInformation("Running in {}", app.Environment.ContentRootPath);
 
-        app.UseDefaultFiles(new DefaultFilesOptions { FileProvider = clientFileProvider });
-        app.UseStaticFiles(new StaticFileOptions { FileProvider = clientFileProvider });
+        AddStaticClientHost(app);
 
         app.Services.GetRequiredService<Endpoints>().Map(app);
 
         await app.RunAsync();
+    }
+
+    private static void AddStaticClientHost(WebApplication app)
+    {
+        var clientDir = Environment.GetEnvironmentVariable("TANKSSERVER_CLIENT");
+        bool required = clientDir != null;
+
+        clientDir ??= Path.Combine(app.Environment.ContentRootPath, "client");
+        bool available = Directory.Exists(clientDir);
+
+        if (!available)
+        {
+            if (required)
+                throw new InvalidOperationException($"The environment variable TANKSSERVER_CLIENT is set, but the specified directory {clientDir} does not exist.");
+            app.Logger.LogError("Not providing static file host for client because {} does not exist", clientDir);
+            return;
+        }
+
+        var clientFileProvider = new PhysicalFileProvider(clientDir);
+        app.UseDefaultFiles(new DefaultFilesOptions { FileProvider = clientFileProvider });
+        app.UseStaticFiles(new StaticFileOptions { FileProvider = clientFileProvider });
     }
 
     [RequiresUnreferencedCode("Calls Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions.Configure<TOptions>(IConfiguration)")]

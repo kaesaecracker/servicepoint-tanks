@@ -4,11 +4,11 @@ namespace TanksServer.Graphics;
 
 internal sealed class DrawPowerUpsStep(MapEntityManager entityManager) : IDrawStep
 {
-    private readonly Sprite _genericSprite = Sprite.FromImageFile("assets/powerup_generic.png");
-    private readonly Sprite _smartSprite = Sprite.FromImageFile("assets/powerup_smart.png");
-    private readonly Sprite _magazineSprite = Sprite.FromImageFile("assets/powerup_magazine.png");
-    private readonly Sprite _explosiveSprite = Sprite.FromImageFile("assets/powerup_explosive.png");
-    private readonly Sprite _fastSprite = Sprite.FromImageFile("assets/powerup_fastbullet.png");
+    private readonly Sprite _genericSprite = Sprite.FromImageFile(Path.Combine(Program.AssetsDir, "powerup_generic.png"));
+    private readonly Sprite _smartSprite = Sprite.FromImageFile(Path.Combine(Program.AssetsDir, "powerup_smart.png"));
+    private readonly Sprite _magazineSprite = Sprite.FromImageFile(Path.Combine(Program.AssetsDir, "powerup_magazine.png"));
+    private readonly Sprite _explosiveSprite = Sprite.FromImageFile(Path.Combine(Program.AssetsDir, "powerup_explosive.png"));
+    private readonly Sprite _fastSprite = Sprite.FromImageFile(Path.Combine(Program.AssetsDir, "powerup_fastbullet.png"));
 
     public void Draw(GamePixelGrid pixels)
     {
