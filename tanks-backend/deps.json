@@ -1,0 +1,57 @@
+[
+  {
+    "pname": "DotNext",
+    "version": "5.3.0",
+    "hash": "sha256-q+VOteFEYhqkndjZq08ZGNlbR/SIqj/mwkAythFCo+c="
+  },
+  {
+    "pname": "DotNext.Threading",
+    "version": "5.3.0",
+    "hash": "sha256-P8ITHieqi7fZSKJsyQNm0iusf9J1c+dmeiXLFrtr+d8="
+  },
+  {
+    "pname": "Microsoft.Extensions.Configuration.Abstractions",
+    "version": "8.0.0",
+    "hash": "sha256-4eBpDkf7MJozTZnOwQvwcfgRKQGcNXe0K/kF+h5Rl8o="
+  },
+  {
+    "pname": "Microsoft.Extensions.Configuration.Binder",
+    "version": "8.0.0",
+    "hash": "sha256-GanfInGzzoN2bKeNwON8/Hnamr6l7RTpYLA49CNXD9Q="
+  },
+  {
+    "pname": "Microsoft.Extensions.DependencyInjection.Abstractions",
+    "version": "8.0.0",
+    "hash": "sha256-75KzEGWjbRELczJpCiJub+ltNUMMbz5A/1KQU+5dgP8="
+  },
+  {
+    "pname": "Microsoft.Extensions.Options",
+    "version": "8.0.0",
+    "hash": "sha256-n2m4JSegQKUTlOsKLZUUHHKMq926eJ0w9N9G+I3FoFw="
+  },
+  {
+    "pname": "Microsoft.Extensions.Options.ConfigurationExtensions",
+    "version": "8.0.0",
+    "hash": "sha256-A5Bbzw1kiNkgirk5x8kyxwg9lLTcSngojeD+ocpG1RI="
+  },
+  {
+    "pname": "Microsoft.Extensions.Primitives",
+    "version": "8.0.0",
+    "hash": "sha256-FU8qj3DR8bDdc1c+WeGZx/PCZeqqndweZM9epcpXjSo="
+  },
+  {
+    "pname": "SixLabors.ImageSharp",
+    "version": "3.1.5",
+    "hash": "sha256-3UehX9T+I81nfgv2dTHlpoPgYzXFk7kHr1mmlQOCBfw="
+  },
+  {
+    "pname": "System.IO.Hashing",
+    "version": "8.0.0",
+    "hash": "sha256-szOGt0TNBo6dEdC3gf6H+e9YW3Nw0woa6UnCGGGK5cE="
+  },
+  {
+    "pname": "System.Threading.Channels",
+    "version": "8.0.0",
+    "hash": "sha256-c5TYoLNXDLroLIPnlfyMHk7nZ70QAckc/c7V199YChg="
+  }
+]

@@ -5,7 +5,7 @@ namespace TanksServer.Graphics;
 internal sealed class DrawTanksStep(MapEntityManager entityManager) : IDrawStep
 {
     private readonly SpriteSheet _tankSprites =
-        SpriteSheet.FromImageFile("assets/tank.png", (int)MapService.TileSize, (int)MapService.TileSize);
+        SpriteSheet.FromImageFile(Path.Combine(Program.AssetsDir, "tank.png"), (int)MapService.TileSize, (int)MapService.TileSize);
 
     public void Draw(GamePixelGrid pixels)
     {

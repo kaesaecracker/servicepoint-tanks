@@ -1,3 +1,4 @@
-[submodule "tanks-backend/servicepoint"]
-	path = tanks-backend/servicepoint
-	url = https://github.com/cccb/servicepoint.git
+[submodule "tanks-backend/servicepoint-binding-csharp"]
+	path = tanks-backend/servicepoint-binding-csharp
+	url = https://git.berlin.ccc.de/servicepoint/servicepoint-binding-csharp.git
+	branch = main
