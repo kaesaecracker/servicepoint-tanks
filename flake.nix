@@ -102,7 +102,16 @@
             '';
           });
 
-          servicepoint-tanks-assets = ./tanks-backend/TanksServer/assets;
+          servicepoint-tanks-assets = pkgs.stdenvNoCC.mkDerivation {
+            pname = "servicepoint-tanks-assets";
+            version = "0.0.0";
+
+            src = ./tanks-backend/TanksServer/assets;
+            buildPhase = "";
+            installPhase = ''
+              cp -rv $src $out
+            '';
+          };
 
           servicepoint-tanks = pkgs.buildDotnetModule {
             pname = "servicepoint-tanks";
