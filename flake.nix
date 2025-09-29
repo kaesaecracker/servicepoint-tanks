@@ -35,6 +35,20 @@
         );
     in
     {
+      apps = forAllSystems (
+        {
+          pkgs,
+          lib,
+          selfPkgs,
+          ...
+        }:
+        {
+          default = {
+            type = "app";
+            program = "${lib.getBin selfPkgs.servicepoint-tanks}/bin/TanksServer";
+          };
+        }
+      );
       devShells = forAllSystems (
         {
           pkgs,
@@ -102,6 +116,8 @@
             selfContainedBuild = true;
 
             buildInputs = [ bindingPkgs.servicepoint-binding-csharp ];
+
+            runtimeDeps = [ bindingPkgs.servicepoint-binding-uniffi ];
 
             makeWrapperArgs = [
               "--set-default TANKSSERVER_CLIENT ${selfPkgs.servicepoint-tanks-frontend}"
