@@ -2,7 +2,56 @@
 
 <!-- TODO: image -->
 
-### Backend
+## Building and running
+
+### With Nix
+
+Using the power of nix, you can just `nix run git+https://git.berlin.ccc.de/vinzenz/servicepoint-tanks`!
+
+To build from local source:
+
+```bash
+# no submodules required
+git clone https://github.com/kaesaecracker/servicepoint-tanks.git
+cd servicepoint-tanks
+nix build .#
+result/bin/TanksServer
+```
+
+You can also use the provided devShells (`nix develop .#`) and follow the manual steps.
+
+For proper IDE suggestions, you may need to initialize the submodules. They are not used for building by Nix though.
+
+### The hard way
+
+```bash
+# initialize the submodules
+git clone https://github.com/kaesaecracker/servicepoint-tanks.git
+cd servicepoint-tanks
+git submodule update --init --recursive
+
+# build
+cd tank-frontent
+npm install
+npm run build
+cd ../tanks-backend
+dotnet build
+```
+
+The Docker builds are currently broken and need some updates for the new library repo structure.
+<!-- TODO currently broken
+
+# build with docker/podman - probably broken rifht
+cd tanks-backend
+docker build .
+cd ../tank-frontend
+docker build .
+cd ..
+docker build .
+```
+-->
+
+## Backend
 
 <!-- TODO: image -->
 
@@ -18,7 +67,7 @@
 - some values (like tank speed) can be configured but are fixed at run time
 - By default, the backend also hosts the frontend
 
-### Frontend
+## Frontend
 
 <!-- TODO: image -->
 
@@ -28,9 +77,9 @@
 - Sends user input to server
 - real time communication via WebSockets, HTTP for the REST
 
-### Binary formats
+## Binary formats
 
-#### Controls WebSocket
+### Controls WebSocket
 
 - Client sends 2 byte messages.
   - on or off: `0x01` or `0x02`
@@ -55,31 +104,3 @@
     - 10: bullet
     - 11: (reserved)
 - client responds with empty message to request the next frame
-
-# Building
-
-```bash
-# checkout repo and submodules
-git clone https://github.com/kaesaecracker/servicepoint-tanks.git
-cd servicepoint-tanks
-git submodule update --init
-cd tanks-backend/servicepoint
-git submodule update --init
-cd ../..
-
-# build with nix-shell
-nix-shell
-cd tank-frontent
-npm install
-npm run build
-cd ../tanks-backend
-dotnet build
-
-# build with docker/podman
-cd tanks-backend
-docker build .
-cd ../tank-frontend
-docker build .
-cd ..
-docker build .
-```
