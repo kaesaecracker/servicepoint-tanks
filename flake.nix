@@ -51,6 +51,7 @@
           };
         }
       );
+
       devShells = forAllSystems (
         {
           pkgs,
@@ -137,6 +138,14 @@
           };
         }
       );
+
+      nixosModules.default = {
+        nixpkgs.overlays = [ self.overlays.default ];
+      };
+
+      overlays.default = final: prev: {
+        servicepoint-tanks = self.legacyPackages."${prev.system}".servicepoint-tanks;
+      };
 
       formatter = forAllSystems ({ pkgs, ... }: pkgs.nixfmt-tree);
     };
