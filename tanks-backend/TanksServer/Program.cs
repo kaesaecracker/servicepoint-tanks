@@ -133,6 +133,9 @@ public static class Program
         app.UseWebSockets();
         app.UseHttpLogging();
 
+        // TODO add domain socket support
+        // TODO Call UseKestrelHttpsConfiguration() on IWebHostBuilder to automatically enable HTTPS when an https:// address is used
+
         return app;
     }
 
